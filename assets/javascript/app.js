@@ -5,7 +5,7 @@
 
 	//loop through the array displaying a button for each element in the topics array
 	for (var i=0; i<topics.length; i++) {
-console.log("index: " + i + " number of topics:" + topics.length + " topics:" + topics[i])
+// console.log("index: " + i + " number of topics:" + topics.length + " topics:" + topics[i])
 		//create a variable and build the html for each button using jquery
 		var buildButton = $("<button>");			//jquery will also insert the end tag
 		buildButton.addClass("topicButton");		//insert a class of topicButton into each button
@@ -28,7 +28,7 @@ console.log("index: " + i + " number of topics:" + topics.length + " topics:" + 
 	      url: queryURL,
 	      method: 'GET'
 	    }).done(function(response) {
-console.log("response:",response);
+// console.log("response:",response);
 			apiResponseArray = response.data;	//the data part of the API response is an array
 			displayImages();					//function used for clarity - code in function could be here
 // console.log("apiResponseArray:", apiResponseArray);
@@ -39,23 +39,33 @@ console.log("response:",response);
 	//loop through the list of gifs and display on screen
 	function displayImages() {
 	$("#displayGifs").empty(); //clear any images already displayed
-console.log("apiResponseArray:", apiResponseArray);
-console.log("length: ",apiResponseArray.length);
+// console.log("apiResponseArray:", apiResponseArray);
+// console.log("length: ",apiResponseArray.length);
 		for (var i=0; i<apiResponseArray.length; i++) {
 			var buildImageDisplay = $("<img>");			//build an image container for the array of gifs
-			buildImageDisplay.attr("id", "image-" + i); //each image will have a unique buildImageDisplay
+			// buildImageDisplay.attr("id", "image-" + i); //each image will have a unique buildImageDisplay
+			buildImageDisplay.attr("class", "gif"); //all images will be in same class for on click function
 			buildImageDisplay.attr("src", apiResponseArray[i].images.original_still.url);
-console.log("displayGifs: ",buildImageDisplay);
+			//create attributes to make an image animated or still
+			buildImageDisplay.attr("img-state", "still");  //toggles between still and animated
+			//store both the still and animated image source
+			buildImageDisplay.attr("img-src-still", apiResponseArray[i].images.original_still.url);
+			buildImageDisplay.attr("img-src-animated", apiResponseArray[i].images.original.url);
+// console.log("displayGifs: ",buildImageDisplay);
 			$("#displayGifs").append(buildImageDisplay);//add image to display
 		}
+			//listen for when an image is clicked and swap src values
+			$(".gif").on("click", function() {
+console.log("Image clicked.");
+				var state = $(this).attr("img-state"); //save the value of data-state on clicked gif
+				if (state == "still") {
+					//animate
+					$(this).attr("src",$(this).attr("img-src-animated"));	//change the src to the animated gif
+					$(this).attr("img-state","animated");					//change the state to animated
+				} else {
+					//stop animation
+					$(this).attr("src",$(this).attr("img-src-still"));	//change the src to the still gif
+					$(this).attr("img-state","still");					//change the state to still
+				};
+			}); 
 	}
-
-
-// console.log(response);
-
-
-//giphy api key = OAJw0fyFvlk0O3cfeAOeBttFwgm67zS9
-//javascript, jQuery
-// var xhr = $.get("https://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=OAJw0fyFvlk0O3cfeAOeBttFwgm67zS9&limit=5");
-// xhr.done(function(data) { console.log("success got data", data); });
-// https://api.giphy.com/v1/gifs/search?q=funny+cat&api_key=OAJw0fyFvlk0O3cfeAOeBttFwgm67zS9&limit=5&rating=g;
