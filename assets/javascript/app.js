@@ -42,17 +42,31 @@
 // console.log("apiResponseArray:", apiResponseArray);
 // console.log("length: ",apiResponseArray.length);
 		for (var i=0; i<apiResponseArray.length; i++) {
-			var buildImageDisplay = $("<img>");			//build an image container for the array of gifs
-			// buildImageDisplay.attr("id", "image-" + i); //each image will have a unique buildImageDisplay
-			buildImageDisplay.attr("class", "gif"); //all images will be in same class for on click function
+			//html for the rating and gifs
+			var buildImageContainer = $("<span>");
+			buildImageContainer.addClass("gifContainer");
+			buildImageContainer.attr("id", "gifContainer" + i);
+			var buildImageRating = $("<p>");
+			// buildImageRating.attr("id", "gifRating" + i);
+			buildImageRating.text("Rating: " + apiResponseArray[i].rating);
+			//html for the gifs
+			var buildImageDisplay = $("<img>");				//build an image container for the array of gifs
+			// buildImageDisplay.attr("id", "image-" + i);	//each image will have a unique buildImageDisplay
+			buildImageDisplay.addClass("gif");				//all images will be in same class for on click function
 			buildImageDisplay.attr("src", apiResponseArray[i].images.original_still.url);
+			buildImageDisplay.attr("height","200px");
+			buildImageDisplay.attr("width","300px");
 			//create attributes to make an image animated or still
 			buildImageDisplay.attr("img-state", "still");  //toggles between still and animated
 			//store both the still and animated image source
 			buildImageDisplay.attr("img-src-still", apiResponseArray[i].images.original_still.url);
 			buildImageDisplay.attr("img-src-animated", apiResponseArray[i].images.original.url);
 // console.log("displayGifs: ",buildImageDisplay);
-			$("#displayGifs").append(buildImageDisplay);//add image to display
+			// $("#displayGifs").append(buildImageDisplay);//add image to display
+			$("#displayGifs").append(buildImageContainer);	//add gif rating to display
+			$("#gifContainer"+i).append(buildImageRating);
+			$("#gifContainer"+i).append(buildImageDisplay);	//add gif to the rating container
+$('.gifContainer').css({"display": "inline"});
 		}
 			//listen for when an image is clicked and swap src values
 			$(".gif").on("click", function() {
