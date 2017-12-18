@@ -3,21 +3,31 @@
 	var apiKey = "OAJw0fyFvlk0O3cfeAOeBttFwgm67zS9";
 	var apiResponseArray = [];
 
-	//loop through the array displaying a button for each element in the topics array
-	for (var i=0; i<topics.length; i++) {
-// console.log("index: " + i + " number of topics:" + topics.length + " topics:" + topics[i])
-		//create a variable and build the html for each button using jquery
-		var buildButton = $("<button>");			//jquery will also insert the end tag
-		buildButton.addClass("topicButton");		//insert a class of topicButton into each button
-		buildButton.attr("topicValue", topics[i]); 	//insert a new attr named topicValue and set to current topic
-		buildButton.text(topics[i]);				//text is the displayed lable on the button
-		$("#displayButtons").append(buildButton);	//add button to display or to end of displayed buttons
-		//the following one line works too but the previous would be easier to edit
-		// $('#displayButtons').append("<button class='topicButton' value=" + i + ">" + topics[i] + "</button>;");
-	}
+	displayButtons();
+
+	function displayButtons() {
+		$("#displayButtons").empty();
+		//loop through the array displaying a button for each element in the topics array
+		for (var i=0; i<topics.length; i++) {
+console.log("displayButtons function");
+console.log("index: " + i + " number of topics:" + topics.length + " topics:" + topics[i]);
+			//create a variable and build the html for each button using jquery
+			var buildButton = $("<button>");			//jquery will also insert the end tag
+			buildButton.addClass("topicButton");		//insert a class of topicButton into each button
+			buildButton.attr("topicValue", topics[i]); 	//insert a new attr named topicValue and set to current topic
+			buildButton.text(topics[i]);				//text is the displayed lable on the button
+			$("#displayButtons").append(buildButton);	//add button to display or to end of displayed buttons
+			//the following one line works too but the previous would be easier to edit
+			// $('#displayButtons').append("<button class='topicButton' value=" + i + ">" + topics[i] + "</button>;");
+		}
+	}; //end of displayButtons
+
+
 	//display images on page from giphy
 	//clicking any of the topic buttons...
-	$(".topicButton").on("click", function(event) {
+	// $(".topicButton").on("click", function(event) {
+	$("#displayButtons").on("click", ".topicButton", function(event) {
+console.log("topicButton clicked");
 		//get the topicValue for the clicked button
 		var topicValue = $(this).attr("topicValue");
 		//use the topicValue in the query for an ajax get
@@ -36,8 +46,23 @@
 	    });
 	});
 
+	//listen for click on submit button
+	$("#submitTopic").on("click", function(event) {
+console.log("submitTopic clicked");
+		// event.preventDefault() prevents the form from trying to submit itself.
+        // We're using a form so that the user can hit enter instead of clicking the button if they want
+        event.preventDefault();
+		//temp variable to hold value typed into form
+		var newTopic = $("#inputTopic").val().trim();
+		//append to the array of topics
+		topics.push(newTopic);
+		//display buttons with new topic
+		displayButtons();
+	});
+
 	//loop through the list of gifs and display on screen
 	function displayImages() {
+console.log("displayImages function");
 	$("#displayGifs").empty(); //clear any images already displayed
 // console.log("apiResponseArray:", apiResponseArray);
 // console.log("length: ",apiResponseArray.length);
@@ -66,11 +91,12 @@
 			$("#displayGifs").append(buildImageContainer);	//add gif rating to display
 			$("#gifContainer"+i).append(buildImageRating);
 			$("#gifContainer"+i).append(buildImageDisplay);	//add gif to the rating container
-$('.gifContainer').css({"display": "inline"});
-		}
+// $('.gifContainer').css({"display": "inline"});
+		} //end of the for loop displaying images
+
 			//listen for when an image is clicked and swap src values
 			$(".gif").on("click", function() {
-console.log("Image clicked.");
+console.log("Gif clicked.");
 				var state = $(this).attr("img-state"); //save the value of data-state on clicked gif
 				if (state == "still") {
 					//animate
@@ -81,5 +107,5 @@ console.log("Image clicked.");
 					$(this).attr("src",$(this).attr("img-src-still"));	//change the src to the still gif
 					$(this).attr("img-state","still");					//change the state to still
 				};
-			}); 
-	}
+			}); //end of gif on click
+	} //end of display image function
