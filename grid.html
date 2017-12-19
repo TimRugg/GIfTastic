@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS Grid</title>
+<!--  	<link rel="stylesheet" type="text/css" href="assets/css/reset.css"> -->
+	<!-- <link rel="stylesheet" type="text/css" href="assets/css/style.css"> -->
+   	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+	<!-- <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet"> -->
+   	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+   	<style>
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+#displayButtons {
+  grid-column: 1 / 4;
+  grid-row: 1 / 2;
+  background-color: yellow;
+}
+#displayGifs { 
+  grid-column: 1 / 4;
+  grid-row: 2 / 6;
+  background-color: orange;
+}
+#inputForm {
+  grid-column: 3 / 4;
+  grid-row: 2 / 4;
+  background-color: green;
+}
+</style>
+
+</head>
+<body>
+
+<div class="wrapper">
+	<div id="displayButtons">buttons-yellow</div>
+	<div id="displayGifs">gifs-cyan</div>
+	<div id="inputForm">input-blue</div>
+</div>
+
+
+
+</body>
+</html>

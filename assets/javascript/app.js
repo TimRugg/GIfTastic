@@ -56,6 +56,7 @@ console.log("submitTopic clicked");
 		var newTopic = $("#inputTopic").val().trim();
 		//append to the array of topics
 		topics.push(newTopic);
+		$("#inputTopic").val("");
 		//display buttons with new topic
 		displayButtons();
 	});
@@ -68,7 +69,7 @@ console.log("displayImages function");
 // console.log("length: ",apiResponseArray.length);
 		for (var i=0; i<apiResponseArray.length; i++) {
 			//html for the rating and gifs
-			var buildImageContainer = $("<span>");
+			var buildImageContainer = $("<container>");
 			buildImageContainer.addClass("gifContainer");
 			buildImageContainer.attr("id", "gifContainer" + i);
 			var buildImageRating = $("<p>");
@@ -79,8 +80,8 @@ console.log("displayImages function");
 			// buildImageDisplay.attr("id", "image-" + i);	//each image will have a unique buildImageDisplay
 			buildImageDisplay.addClass("gif");				//all images will be in same class for on click function
 			buildImageDisplay.attr("src", apiResponseArray[i].images.original_still.url);
-			buildImageDisplay.attr("height","200px");
-			buildImageDisplay.attr("width","300px");
+			// buildImageDisplay.attr("height","200px");
+			// buildImageDisplay.attr("width","300px");
 			//create attributes to make an image animated or still
 			buildImageDisplay.attr("img-state", "still");  //toggles between still and animated
 			//store both the still and animated image source
@@ -91,7 +92,6 @@ console.log("displayImages function");
 			$("#displayGifs").append(buildImageContainer);	//add gif rating to display
 			$("#gifContainer"+i).append(buildImageRating);
 			$("#gifContainer"+i).append(buildImageDisplay);	//add gif to the rating container
-// $('.gifContainer').css({"display": "inline"});
 		} //end of the for loop displaying images
 
 			//listen for when an image is clicked and swap src values
