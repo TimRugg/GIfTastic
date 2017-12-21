@@ -1,5 +1,5 @@
 	//create variables
-	var topics = ["football","soccer","lacrosse","hockey","tennis"];
+	var topics = ["baseball","soccer","basketball","hockey","tennis","bowling"];
 	var apiKey = "OAJw0fyFvlk0O3cfeAOeBttFwgm67zS9";
 	var apiResponseArray = [];
 
@@ -9,8 +9,8 @@
 		$("#displayButtons").empty();
 		//loop through the array displaying a button for each element in the topics array
 		for (var i=0; i<topics.length; i++) {
-console.log("displayButtons function");
-console.log("index: " + i + " number of topics:" + topics.length + " topics:" + topics[i]);
+// console.log("displayButtons function");
+// console.log("index: " + i + " number of topics:" + topics.length + " topics:" + topics[i]);
 			//create a variable and build the html for each button using jquery
 			var buildButton = $("<button>");			//jquery will also insert the end tag
 			buildButton.addClass("topicButton");		//insert a class of topicButton into each button
@@ -27,13 +27,12 @@ console.log("index: " + i + " number of topics:" + topics.length + " topics:" + 
 	//clicking any of the topic buttons...
 	// $(".topicButton").on("click", function(event) {
 	$("#displayButtons").on("click", ".topicButton", function(event) {
-console.log("topicButton clicked");
+// console.log("topicButton clicked");
 		//get the topicValue for the clicked button
 		var topicValue = $(this).attr("topicValue");
 		//use the topicValue in the query for an ajax get
 		var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topicValue + "&api_key=" + apiKey + "&limit=10";
 		//GET the search API from giphy using button clicked as search term
-//Need to replace spaces with '+' in the topicValue
 	    $.ajax({
 	      url: queryURL,
 	      method: 'GET'
@@ -48,7 +47,7 @@ console.log("topicButton clicked");
 
 	//listen for click on submit button
 	$("#submitTopic").on("click", function(event) {
-console.log("submitTopic clicked");
+// console.log("submitTopic clicked");
 		// event.preventDefault() prevents the form from trying to submit itself.
         // We're using a form so that the user can hit enter instead of clicking the button if they want
         event.preventDefault();
@@ -63,7 +62,7 @@ console.log("submitTopic clicked");
 
 	//loop through the list of gifs and display on screen
 	function displayImages() {
-console.log("displayImages function");
+// console.log("displayImages function");
 	$("#displayGifs").empty(); //clear any images already displayed
 // console.log("apiResponseArray:", apiResponseArray);
 // console.log("length: ",apiResponseArray.length);
@@ -96,7 +95,7 @@ console.log("displayImages function");
 
 			//listen for when an image is clicked and swap src values
 			$(".gif").on("click", function() {
-console.log("Gif clicked.");
+// console.log("Gif clicked.");
 				var state = $(this).attr("img-state"); //save the value of data-state on clicked gif
 				if (state == "still") {
 					//animate
